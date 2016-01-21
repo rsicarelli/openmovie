@@ -22,7 +22,6 @@ import br.com.rsicarelli.openmovie.data.Movie;
 import br.com.rsicarelli.openmovie.widget.VerticalRecyclerView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.functions.Action1;
 
 /**
  * Created by rodrigosicarelli on 1/18/16.
@@ -35,11 +34,8 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     @Bind(R.id.progress_view)
     CircularProgressView mProgressView;
 
-    OnMovieClickListener mItemListener = new OnMovieClickListener() {
-        @Override
-        public void onMovieClick(Movie movie) {
-            //TODO something
-        }
+    OnMovieClickListener mItemListener = movie -> {
+        //TODO something
     };
 
     private MoviesAdapter mAdapter;
@@ -107,13 +103,10 @@ public class HomeFragment extends Fragment implements HomeContract.View {
                 .toObservable()
                 .ofType(SearchEvent.class)
                 .cast(SearchEvent.class)
-                .subscribe(new Action1<SearchEvent>() {
-                    @Override
-                    public void call(SearchEvent searchEvent) {
-                        if (!TextUtils.isEmpty(searchEvent.query)
-                                && searchEvent.query.length() > 1) {
-                            mUserInteractionsListener.doSearch(searchEvent.query);
-                        }
+                .subscribe(searchEvent -> {
+                    if (!TextUtils.isEmpty(searchEvent.query)
+                            && searchEvent.query.length() > 1) {
+                        mUserInteractionsListener.doSearch(searchEvent.query);
                     }
                 });
     }
