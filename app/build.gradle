@@ -35,6 +35,7 @@ dependencies {
 
     compile 'com.github.rahatarmanahmed:circularprogressview:2.4.0'
     compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'io.reactivex:rxjava:1.1.0'
 
     testCompile 'junit:junit:4.12'
 

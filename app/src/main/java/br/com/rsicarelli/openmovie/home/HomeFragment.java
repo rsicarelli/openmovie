@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +16,13 @@ import java.util.List;
 import br.com.rsicarelli.openmovie.R;
 import br.com.rsicarelli.openmovie.adapters.MoviesAdapter;
 import br.com.rsicarelli.openmovie.api.MovieClient;
+import br.com.rsicarelli.openmovie.bus.RxBusManager;
+import br.com.rsicarelli.openmovie.bus.events.SearchEvent;
 import br.com.rsicarelli.openmovie.data.Movie;
 import br.com.rsicarelli.openmovie.widget.VerticalRecyclerView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.functions.Action1;
 
 /**
  * Created by rodrigosicarelli on 1/18/16.
@@ -63,6 +67,8 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
         mUserInteractionsListener = new HomePresenter(new MovieClient(), this);
         mUserInteractionsListener.doSearch("Batman");
+
+        initBus();
     }
 
     @Nullable
@@ -94,6 +100,22 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     @Override
     public void showError(String errorMessage) {
         Snackbar.make(mRoot, errorMessage, Snackbar.LENGTH_SHORT).show();
+    }
+
+    private void initBus() {
+        RxBusManager.getInstance()
+                .toObservable()
+                .ofType(SearchEvent.class)
+                .cast(SearchEvent.class)
+                .subscribe(new Action1<SearchEvent>() {
+                    @Override
+                    public void call(SearchEvent searchEvent) {
+                        if (!TextUtils.isEmpty(searchEvent.query)
+                                && searchEvent.query.length() > 1) {
+                            mUserInteractionsListener.doSearch(searchEvent.query);
+                        }
+                    }
+                });
     }
 
 }
