@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">OpenMovie</string>
+    <string name="general_info">General info</string>
+    <string name="plot">Plot</string>
 </resources>

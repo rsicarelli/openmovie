@@ -9,5 +9,5 @@ import br.com.rsicarelli.openmovie.data.Movie;
  */
 public interface SearchMoviesCallback {
     void onMovieFounded(List<Movie> movieList);
-    void onMovieNotFounded(String errorMessage);
+    void onMovieNotFound(String errorMessage);
 }

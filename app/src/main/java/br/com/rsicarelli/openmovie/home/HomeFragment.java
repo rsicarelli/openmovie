@@ -1,5 +1,6 @@
 package br.com.rsicarelli.openmovie.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -19,6 +20,7 @@ import br.com.rsicarelli.openmovie.api.MovieClient;
 import br.com.rsicarelli.openmovie.bus.RxBusManager;
 import br.com.rsicarelli.openmovie.bus.events.SearchEvent;
 import br.com.rsicarelli.openmovie.data.Movie;
+import br.com.rsicarelli.openmovie.movie.MovieActivity;
 import br.com.rsicarelli.openmovie.widget.VerticalRecyclerView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -35,7 +37,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     CircularProgressView mProgressView;
 
     OnMovieClickListener mItemListener = movie -> {
-        //TODO something
+        navigateToMovieDetail(movie);
     };
 
     private MoviesAdapter mAdapter;
@@ -111,4 +113,11 @@ public class HomeFragment extends Fragment implements HomeContract.View {
                 });
     }
 
+    private void navigateToMovieDetail(Movie movie) {
+        Intent intent = new Intent(getActivity(), MovieActivity.class);
+        intent.putExtra(MovieActivity.EXTRA_MOVIE_ID, movie.id);
+        intent.putExtra(MovieActivity.EXTRA_MOVIE_TITLE, movie.title);
+        intent.putExtra(MovieActivity.EXTRA_MOVIE_AVATAR, movie.getPoster());
+        startActivity(intent);
+    }
 }

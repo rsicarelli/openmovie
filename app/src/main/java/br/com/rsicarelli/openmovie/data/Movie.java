@@ -14,5 +14,13 @@ public class Movie {
     public String id;
 
     @SerializedName("Poster")
-    public String poster;
+    private String poster;
+
+    public String getPoster() {
+        if (poster.contains("SX300")) {
+            poster = poster.replace("SX300", "SX500");
+        }
+        return poster;
+    }
+
 }

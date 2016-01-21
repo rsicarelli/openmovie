@@ -1,5 +1,6 @@
 package br.com.rsicarelli.openmovie.api;
 
+import br.com.rsicarelli.openmovie.data.MovieResponse;
 import br.com.rsicarelli.openmovie.data.SearchResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -14,6 +15,13 @@ public interface MovieService {
     Call<SearchResponse> loadMovies(
             @Query("s") String query,
             @Query("type") String type,
+            @Query("r") String returnType
+    );
+
+    @GET("/")
+    Call<MovieResponse> getMovie(
+            @Query("i") String id,
+            @Query("plot") String plotType,
             @Query("r") String returnType
     );
 

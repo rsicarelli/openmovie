@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 import br.com.rsicarelli.openmovie.data.Movie;
+import br.com.rsicarelli.openmovie.data.MovieResponse;
 import br.com.rsicarelli.openmovie.data.SearchResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,19 +25,44 @@ public class MovieClient implements MovieServiceApi {
                 if (result != null) {
                     callback.onMovieFounded(result);
                 } else {
-                    callback.onMovieNotFounded("There is no movies with this name :(");
+                    callback.onMovieNotFound("There is no movies with this name :(");
                 }
             }
 
             @Override
             public void onFailure(Throwable t) {
-                callback.onMovieNotFounded("There is no movies with this name :(");
+                callback.onMovieNotFound("There is no movies with this name :(");
             }
         });
     }
 
+    @Override
+    public void findMovieById(String id, @NonNull final MovieCallback callback) {
+        MovieService movieService = RetrofitManager.getRetrofitInstance().create(MovieService.class);
+
+        Call<MovieResponse> movieCall = movieService.getMovie(id, SearchValues.PLOT_TYPE, SearchValues.RETURN_TYPE);
+        movieCall.enqueue(new Callback<MovieResponse>() {
+            @Override
+            public void onResponse(Response<MovieResponse> response) {
+                MovieResponse result = response.body();
+                if (result != null) {
+                    callback.onMovieFounded(result);
+                } else {
+                    callback.onMovieNotFound("There is no movie with this id :(");
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                callback.onMovieNotFound("There is no movie with this id :(");
+            }
+        });
+    }
+
+
     private class SearchValues {
         public static final String TYPE = "movie";
         public static final String RETURN_TYPE = "JSON";
+        public static final String PLOT_TYPE = "full";
     }
 }

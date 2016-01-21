@@ -34,7 +34,7 @@ public class HomePresenter implements HomeContract.UserInteractions, SearchMovie
     }
 
     @Override
-    public void onMovieNotFounded(String errorMessage) {
+    public void onMovieNotFound(String errorMessage) {
         mHomeView.setProgressIndicator(false);
         mHomeView.showError(errorMessage);
     }

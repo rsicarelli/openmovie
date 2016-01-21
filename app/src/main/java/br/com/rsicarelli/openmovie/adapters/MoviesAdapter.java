@@ -54,7 +54,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         viewHolder.title.setText(movie.title);
         viewHolder.year.setText(movie.year);
 
-        Uri uri = Uri.parse(movie.poster);
+        Uri uri = Uri.parse(movie.getPoster());
 
         ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
                 .setProgressiveRenderingEnabled(true)
