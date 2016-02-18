@@ -20,7 +20,7 @@ public class MovieClient implements MovieServiceApi {
         Call<SearchResponse> searchResponseCall = movieService.loadMovies(query, SearchValues.TYPE, SearchValues.RETURN_TYPE);
         searchResponseCall.enqueue(new Callback<SearchResponse>() {
             @Override
-            public void onResponse(Response<SearchResponse> response) {
+            public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
                 List<Movie> result = response.body().result;
                 if (result != null) {
                     callback.onMovieFounded(result);
@@ -30,7 +30,7 @@ public class MovieClient implements MovieServiceApi {
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Call<SearchResponse> call, Throwable t) {
                 callback.onMovieNotFound("There is no movies with this name :(");
             }
         });
@@ -43,7 +43,7 @@ public class MovieClient implements MovieServiceApi {
         Call<MovieResponse> movieCall = movieService.getMovie(id, SearchValues.PLOT_TYPE, SearchValues.RETURN_TYPE);
         movieCall.enqueue(new Callback<MovieResponse>() {
             @Override
-            public void onResponse(Response<MovieResponse> response) {
+            public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 MovieResponse result = response.body();
                 if (result != null) {
                     callback.onMovieFounded(result);
@@ -53,7 +53,7 @@ public class MovieClient implements MovieServiceApi {
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Call<MovieResponse> call, Throwable t) {
                 callback.onMovieNotFound("There is no movie with this id :(");
             }
         });

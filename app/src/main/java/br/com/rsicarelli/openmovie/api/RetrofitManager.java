@@ -3,8 +3,8 @@ package br.com.rsicarelli.openmovie.api;
 import com.google.gson.Gson;
 
 import okhttp3.OkHttpClient;
-import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by rodrigosicarelli on 1/18/16.
