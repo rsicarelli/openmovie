@@ -30,12 +30,12 @@ import static com.facebook.common.internal.Preconditions.checkNotNull;
  */
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
 
-    private List<Movie> mMovies;
-    private HomeFragment.OnMovieClickListener mItemListener;
+    private List<Movie> movies;
+    private HomeFragment.OnMovieClickListener movieClickListener;
 
-    public MoviesAdapter(List<Movie> movies, HomeFragment.OnMovieClickListener itemListener) {
+    public MoviesAdapter(List<Movie> movies, HomeFragment.OnMovieClickListener movieClickListener) {
         setList(movies);
-        mItemListener = itemListener;
+        this.movieClickListener = movieClickListener;
     }
 
     @Override
@@ -44,12 +44,12 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         LayoutInflater inflater = LayoutInflater.from(context);
         View movieView = inflater.inflate(R.layout.item_movie, parent, false);
 
-        return new ViewHolder(movieView, mItemListener);
+        return new ViewHolder(movieView, movieClickListener);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        Movie movie = mMovies.get(position);
+        Movie movie = movies.get(position);
 
         viewHolder.title.setText(movie.title);
         viewHolder.year.setText(movie.year);
@@ -72,16 +72,16 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     }
 
     private void setList(List<Movie> movies) {
-        mMovies = checkNotNull(movies);
+        this.movies = checkNotNull(movies);
     }
 
     @Override
     public int getItemCount() {
-        return mMovies.size();
+        return movies.size();
     }
 
     public Movie getItem(int position) {
-        return mMovies.get(position);
+        return movies.get(position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -95,11 +95,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         @Bind(R.id.movie_poster)
         public SimpleDraweeView moviePoster;
 
-        private HomeFragment.OnMovieClickListener mItemListener;
+        private HomeFragment.OnMovieClickListener movieClickListener;
 
         public ViewHolder(View itemView, HomeFragment.OnMovieClickListener listener) {
             super(itemView);
-            mItemListener = listener;
+            movieClickListener = listener;
             ButterKnife.bind(this, itemView);
         }
 
@@ -107,7 +107,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         public void onClick(View v) {
             int position = getAdapterPosition();
             Movie movie = getItem(position);
-            mItemListener.onMovieClick(movie);
+            movieClickListener.onMovieClick(movie);
         }
     }
 }

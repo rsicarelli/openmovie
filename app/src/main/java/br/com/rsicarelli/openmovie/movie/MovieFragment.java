@@ -25,24 +25,21 @@ public class MovieFragment extends Fragment implements MovieContract.View {
     public static final String ARG_MOVIE_ID = "arg_movie_id";
 
     @Bind(R.id.progress_view)
-    CircularProgressView mProgressView;
-
-//    @Bind(R.id.movie_avatar)
-//    SimpleDraweeView mViewAvatar;
+    CircularProgressView progressView;
 
     @Bind(R.id.year)
-    TextView mViewYear;
+    TextView viewYear;
 
     @Bind(R.id.runtime)
-    TextView mViewRuntime;
+    TextView viewRuntime;
 
     @Bind(R.id.genre)
-    TextView mViewGenre;
+    TextView viewGenre;
 
     @Bind(R.id.plot)
-    TextView mViewPlot;
+    TextView viewPlot;
 
-    private View mRoot;
+    private View viewRoot;
 
     public MovieFragment() {
         // Requires empty public constructor
@@ -76,29 +73,29 @@ public class MovieFragment extends Fragment implements MovieContract.View {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mRoot = inflater.inflate(R.layout.fragment_movie, container, false);
+        viewRoot = inflater.inflate(R.layout.fragment_movie, container, false);
 
-        ButterKnife.bind(this, mRoot);
+        ButterKnife.bind(this, viewRoot);
 
-        return mRoot;
+        return viewRoot;
     }
 
     @Override
     public void showResults(MovieResponse result) {
-        mViewYear.setText(result.year);
-        mViewGenre.setText(result.genre);
-        mViewRuntime.setText(result.runtime);
-        mViewPlot.setText(result.plot);
+        viewYear.setText(result.year);
+        viewGenre.setText(result.genre);
+        viewRuntime.setText(result.runtime);
+        viewPlot.setText(result.plot);
     }
 
     @Override
     public void setProgressIndicator(boolean active) {
-        mProgressView.setVisibility(active ? View.VISIBLE : View.GONE);
+        progressView.setVisibility(active ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public void showError(String errorMessage) {
-        Snackbar.make(mRoot, errorMessage, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(viewRoot, errorMessage, Snackbar.LENGTH_SHORT).show();
     }
 
 }

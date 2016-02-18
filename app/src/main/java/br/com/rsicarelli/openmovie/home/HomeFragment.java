@@ -31,14 +31,12 @@ import butterknife.ButterKnife;
 public class HomeFragment extends Fragment implements HomeContract.View {
 
     @Bind(R.id.movie_list)
-    VerticalRecyclerView mRecyclerView;
+    VerticalRecyclerView movieList;
 
     @Bind(R.id.progress_view)
-    CircularProgressView mProgressView;
+    CircularProgressView progressView;
 
-    OnMovieClickListener mItemListener = movie -> {
-        navigateToMovieDetail(movie);
-    };
+    OnMovieClickListener itemListener = this::navigateToMovieDetail;
 
     private MoviesAdapter mAdapter;
 
@@ -83,8 +81,8 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     @Override
     public void showResults(List<Movie> result) {
         if (mAdapter == null) {
-            mAdapter = new MoviesAdapter(result, mItemListener);
-            mRecyclerView.setAdapter(mAdapter);
+            mAdapter = new MoviesAdapter(result, itemListener);
+            movieList.setAdapter(mAdapter);
         } else {
             mAdapter.replaceData(result);
         }
@@ -92,7 +90,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
     @Override
     public void setProgressIndicator(boolean active) {
-        mProgressView.setVisibility(active ? View.VISIBLE : View.GONE);
+        progressView.setVisibility(active ? View.VISIBLE : View.GONE);
     }
 
     @Override

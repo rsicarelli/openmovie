@@ -13,29 +13,29 @@ import static com.facebook.common.internal.Preconditions.checkNotNull;
  */
 public class HomePresenter implements HomeContract.UserInteractions, SearchMoviesCallback {
 
-    private final MovieClient mClient;
-    private final HomeContract.View mHomeView;
+    private final MovieClient client;
+    private final HomeContract.View homeView;
 
-    public HomePresenter(MovieClient mClient, HomeContract.View mHomeView) {
-        this.mClient = checkNotNull(mClient, "Movie client cannot be null");
-        this.mHomeView = checkNotNull(mHomeView, "You must pass the HomeContract.View as parameter");
+    public HomePresenter(MovieClient client, HomeContract.View homeView) {
+        this.client = checkNotNull(client, "Movie client cannot be null");
+        this.homeView = checkNotNull(homeView, "You must pass the HomeContract.View as parameter");
     }
 
     @Override
     public void doSearch(String query) {
-        mHomeView.setProgressIndicator(true);
-        mClient.findMoviesByQuery(query, this);
+        homeView.setProgressIndicator(true);
+        client.findMoviesByQuery(query, this);
     }
 
     @Override
     public void onMovieFounded(List<Movie> movieList) {
-        mHomeView.setProgressIndicator(false);
-        mHomeView.showResults(movieList);
+        homeView.setProgressIndicator(false);
+        homeView.showResults(movieList);
     }
 
     @Override
     public void onMovieNotFound(String errorMessage) {
-        mHomeView.setProgressIndicator(false);
-        mHomeView.showError(errorMessage);
+        homeView.setProgressIndicator(false);
+        homeView.showError(errorMessage);
     }
 }

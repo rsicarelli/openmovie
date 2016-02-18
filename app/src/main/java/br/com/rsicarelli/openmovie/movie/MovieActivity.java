@@ -28,8 +28,7 @@ public class MovieActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     @Bind(R.id.movie_avatar)
-    SimpleDraweeView mViewAvatar;
-
+    SimpleDraweeView viewAvatar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +61,7 @@ public class MovieActivity extends AppCompatActivity {
                         .setImageRequest(request)
                         .build();
 
-                mViewAvatar.setController(controller);
+                viewAvatar.setController(controller);
             }
         }
     }

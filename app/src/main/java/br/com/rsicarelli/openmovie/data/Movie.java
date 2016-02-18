@@ -17,10 +17,15 @@ public class Movie {
     private String poster;
 
     public String getPoster() {
-        if (poster.contains("SX300")) {
-            poster = poster.replace("SX300", "SX500");
+        if (poster.contains(PosterSize.MEDIUM_SIZE)) {
+            poster = poster.replace(PosterSize.MEDIUM_SIZE, PosterSize.BIG_SIZE);
         }
         return poster;
+    }
+
+    private static class PosterSize {
+        private static final String MEDIUM_SIZE = "SX300";
+        private static final String BIG_SIZE = "SX500";
     }
 
 }
