@@ -14,12 +14,14 @@ import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import br.com.rsicarelli.openmovie.R;
 import br.com.rsicarelli.openmovie.adapters.MoviesAdapter;
-import br.com.rsicarelli.openmovie.api.MovieClient;
 import br.com.rsicarelli.openmovie.bus.RxBusManager;
 import br.com.rsicarelli.openmovie.bus.events.SearchEvent;
 import br.com.rsicarelli.openmovie.data.Movie;
+import br.com.rsicarelli.openmovie.global.OpenMovieApplication;
 import br.com.rsicarelli.openmovie.movie.MovieActivity;
 import br.com.rsicarelli.openmovie.widget.VerticalRecyclerView;
 import butterknife.Bind;
@@ -36,12 +38,14 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     @Bind(R.id.progress_view)
     CircularProgressView progressView;
 
+    @Inject
+    HomePresenter homePresenter;
+
     OnMovieClickListener itemListener = this::navigateToMovieDetail;
 
-    private MoviesAdapter mAdapter;
+    private MoviesAdapter moviesAdapter;
 
-    private HomeContract.UserInteractions mUserInteractionsListener;
-    private View mRoot;
+    private View view;
 
     public interface OnMovieClickListener {
         void onMovieClick(Movie movie);
@@ -59,10 +63,10 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        setRetainInstance(true);
+        OpenMovieApplication.getOpenMovieApplication().getComponent().inject(this);
 
-        mUserInteractionsListener = new HomePresenter(new MovieClient(), this);
-        mUserInteractionsListener.doSearch("Batman");
+        homePresenter.setHomeView(this);
+        homePresenter.doSearch("Batman");
 
         initBus();
     }
@@ -71,20 +75,20 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mRoot = inflater.inflate(R.layout.fragment_home, container, false);
+        view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        ButterKnife.bind(this, mRoot);
+        ButterKnife.bind(this, view);
 
-        return mRoot;
+        return view;
     }
 
     @Override
     public void showResults(List<Movie> result) {
-        if (mAdapter == null) {
-            mAdapter = new MoviesAdapter(result, itemListener);
-            movieList.setAdapter(mAdapter);
+        if (moviesAdapter == null) {
+            moviesAdapter = new MoviesAdapter(result, itemListener);
+            movieList.setAdapter(moviesAdapter);
         } else {
-            mAdapter.replaceData(result);
+            moviesAdapter.replaceData(result);
         }
     }
 
@@ -95,7 +99,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
     @Override
     public void showError(String errorMessage) {
-        Snackbar.make(mRoot, errorMessage, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(view, errorMessage, Snackbar.LENGTH_SHORT).show();
     }
 
     private void initBus() {
@@ -106,7 +110,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
                 .subscribe(searchEvent -> {
                     if (!TextUtils.isEmpty(searchEvent.query)
                             && searchEvent.query.length() > 1) {
-                        mUserInteractionsListener.doSearch(searchEvent.query);
+                        homePresenter.doSearch(searchEvent.query);
                     }
                 });
     }

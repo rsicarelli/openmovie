@@ -2,23 +2,29 @@ package br.com.rsicarelli.openmovie.home;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import br.com.rsicarelli.openmovie.api.MovieClient;
 import br.com.rsicarelli.openmovie.api.SearchMoviesCallback;
 import br.com.rsicarelli.openmovie.data.Movie;
-
-import static com.facebook.common.internal.Preconditions.checkNotNull;
+import br.com.rsicarelli.openmovie.global.OpenMovieApplication;
 
 /**
  * Created by rodrigosicarelli on 1/18/16.
  */
 public class HomePresenter implements HomeContract.UserInteractions, SearchMoviesCallback {
 
-    private final MovieClient client;
-    private final HomeContract.View homeView;
+    @Inject
+    MovieClient client;
 
-    public HomePresenter(MovieClient client, HomeContract.View homeView) {
-        this.client = checkNotNull(client, "Movie client cannot be null");
-        this.homeView = checkNotNull(homeView, "You must pass the HomeContract.View as parameter");
+    private HomeContract.View homeView;
+
+    public HomePresenter() {
+        OpenMovieApplication.getOpenMovieApplication().getComponent().inject(this);
+    }
+
+    public void setHomeView(HomeContract.View homeView) {
+        this.homeView = homeView;
     }
 
     @Override

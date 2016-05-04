@@ -59,7 +59,6 @@ public class MovieClient implements MovieServiceApi {
         });
     }
 
-
     private class SearchValues {
         public static final String TYPE = "movie";
         public static final String RETURN_TYPE = "JSON";

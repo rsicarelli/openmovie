@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +11,11 @@ import android.widget.TextView;
 
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
+import javax.inject.Inject;
+
 import br.com.rsicarelli.openmovie.R;
-import br.com.rsicarelli.openmovie.api.MovieClient;
 import br.com.rsicarelli.openmovie.data.MovieResponse;
+import br.com.rsicarelli.openmovie.global.OpenMovieApplication;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -39,11 +40,10 @@ public class MovieFragment extends Fragment implements MovieContract.View {
     @Bind(R.id.plot)
     TextView viewPlot;
 
-    private View viewRoot;
+    @Inject
+    MoviePresenter moviePresenter;
 
-    public MovieFragment() {
-        // Requires empty public constructor
-    }
+    private View viewRoot;
 
     public static MovieFragment newInstance(String movieId) {
         MovieFragment fragment = new MovieFragment();
@@ -59,14 +59,12 @@ public class MovieFragment extends Fragment implements MovieContract.View {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        OpenMovieApplication.getOpenMovieApplication().getComponent().inject(this);
+
         setRetainInstance(true);
 
-        String movieId = getArguments().getString(ARG_MOVIE_ID);
-
-        if (!TextUtils.isEmpty(movieId)) {
-            MovieContract.UserInteractions mUserInteractionsListener = new MoviePresenter(new MovieClient(), this);
-            mUserInteractionsListener.doSearch(movieId);
-        }
+        moviePresenter.setMovieView(this);
+        moviePresenter.doSearch(getArguments().getString(ARG_MOVIE_ID));
     }
 
     @Nullable
