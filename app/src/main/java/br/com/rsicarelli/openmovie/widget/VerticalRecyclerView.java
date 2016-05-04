@@ -26,7 +26,6 @@ public class VerticalRecyclerView extends RecyclerView {
     }
 
     private void init(Context context) {
-        setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         setLayoutManager(layoutManager);

@@ -1,6 +1,5 @@
 package br.com.rsicarelli.openmovie.adapters;
 
-import android.content.Context;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -40,9 +39,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View movieView = inflater.inflate(R.layout.item_movie, parent, false);
+        View movieView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_movie, parent, false);
 
         return new ViewHolder(movieView, movieClickListener);
     }
@@ -104,7 +102,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         }
 
         @OnClick(R.id.movie_detail)
-        public void onClick(View v) {
+        void onClick(View v) {
             int position = getAdapterPosition();
             Movie movie = getItem(position);
             movieClickListener.onMovieClick(movie);
