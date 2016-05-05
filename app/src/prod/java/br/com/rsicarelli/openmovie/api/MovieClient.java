@@ -7,6 +7,7 @@ import java.util.List;
 import br.com.rsicarelli.openmovie.data.Movie;
 import br.com.rsicarelli.openmovie.data.MovieResponse;
 import br.com.rsicarelli.openmovie.data.SearchResponse;
+import br.com.rsicarelli.openmovie.util.EspressoIdlingResource;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -15,6 +16,8 @@ public class MovieClient implements MovieServiceApi {
 
     @Override
     public void findMoviesByQuery(String query, @NonNull final SearchMoviesCallback callback) {
+        EspressoIdlingResource.increment(); // App is busy until further notice.
+
         MovieService movieService = RetrofitManager.getRetrofitInstance().create(MovieService.class);
 
         Call<SearchResponse> searchResponseCall = movieService.loadMovies(query, SearchValues.TYPE, SearchValues.RETURN_TYPE);
@@ -27,6 +30,8 @@ public class MovieClient implements MovieServiceApi {
                 } else {
                     callback.onMovieNotFound("There is no movies with this name :(");
                 }
+
+                EspressoIdlingResource.decrement();
             }
 
             @Override
@@ -38,6 +43,8 @@ public class MovieClient implements MovieServiceApi {
 
     @Override
     public void findMovieById(String id, @NonNull final MovieCallback callback) {
+        EspressoIdlingResource.increment(); // App is busy until further notice.
+
         MovieService movieService = RetrofitManager.getRetrofitInstance().create(MovieService.class);
 
         Call<MovieResponse> movieCall = movieService.getMovie(id, SearchValues.PLOT_TYPE, SearchValues.RETURN_TYPE);
@@ -50,6 +57,7 @@ public class MovieClient implements MovieServiceApi {
                 } else {
                     callback.onMovieNotFound("There is no movie with this id :(");
                 }
+                EspressoIdlingResource.decrement();
             }
 
             @Override

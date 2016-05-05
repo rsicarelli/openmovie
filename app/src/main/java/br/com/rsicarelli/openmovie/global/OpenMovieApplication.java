@@ -22,7 +22,7 @@ public class OpenMovieApplication extends Application {
         super.onCreate();
         Fresco.initialize(this);
         openMovieApplication = this;
-        if (component == null) {
+        if (getComponent() == null) {
             component = DaggerMainComponent.builder()
                     .mainModule(new MainModule())
                     .clientModule(new ClientModule())
@@ -37,9 +37,5 @@ public class OpenMovieApplication extends Application {
 
     public MainComponent getComponent() {
         return component;
-    }
-
-    public void setComponent(MainComponent component) {
-        this.component = component;
     }
 }

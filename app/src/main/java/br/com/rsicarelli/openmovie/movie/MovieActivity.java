@@ -2,6 +2,8 @@ package br.com.rsicarelli.openmovie.movie;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -15,10 +17,11 @@ import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
 import br.com.rsicarelli.openmovie.R;
+import br.com.rsicarelli.openmovie.util.EspressoIdlingResource;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MovieActivity extends AppCompatActivity {
+public class MovieActivity extends AppCompatActivity implements EspressoIdlingResource.EspressoIdlingContract {
 
     public final static String EXTRA_MOVIE_ID = "movie_id";
     public final static String EXTRA_MOVIE_TITLE = "title";
@@ -77,5 +80,11 @@ public class MovieActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    @VisibleForTesting
+    @Override
+    public IdlingResource getCountingIdlingResource() {
+        return EspressoIdlingResource.getIdlingResource();
     }
 }

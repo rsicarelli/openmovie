@@ -17,11 +17,8 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.pressKey;
 import static android.support.test.espresso.action.ViewActions.typeText;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
  * Created by rodrigosicarelli on 5/4/16.
@@ -40,7 +37,6 @@ public class SimpleTest extends BaseActivityTestCase {
 
     @Test
     public void shouldDoSomething() {
-        onView(withText("Mock!")).check(matches(isDisplayed()));
         onView(withId(R.id.action_search)).perform(click());
         onView(isAssignableFrom(EditText.class))
                 .perform(typeText("Lord of rings"), pressKey(KeyEvent.KEYCODE_ENTER));

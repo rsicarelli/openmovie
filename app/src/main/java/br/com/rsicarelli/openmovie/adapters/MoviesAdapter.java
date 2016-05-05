@@ -18,6 +18,7 @@ import java.util.List;
 import br.com.rsicarelli.openmovie.R;
 import br.com.rsicarelli.openmovie.data.Movie;
 import br.com.rsicarelli.openmovie.home.HomeFragment;
+import br.com.rsicarelli.openmovie.widget.ImageDraweeListener;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -58,6 +59,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
                 .setProgressiveRenderingEnabled(true)
                 .build();
         DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setControllerListener(new ImageDraweeListener())
                 .setImageRequest(request)
                 .build();
 

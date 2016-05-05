@@ -3,6 +3,8 @@ package br.com.rsicarelli.openmovie.home;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -17,10 +19,11 @@ import android.view.MenuItem;
 import br.com.rsicarelli.openmovie.R;
 import br.com.rsicarelli.openmovie.bus.RxBusManager;
 import br.com.rsicarelli.openmovie.bus.events.SearchEvent;
+import br.com.rsicarelli.openmovie.util.EspressoIdlingResource;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements EspressoIdlingResource.EspressoIdlingContract {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -78,4 +81,9 @@ public class HomeActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    @VisibleForTesting
+    @Override
+    public IdlingResource getCountingIdlingResource() {
+        return EspressoIdlingResource.getIdlingResource();
+    }
 }
