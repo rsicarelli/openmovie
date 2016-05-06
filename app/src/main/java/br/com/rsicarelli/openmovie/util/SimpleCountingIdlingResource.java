@@ -34,9 +34,7 @@ import static com.facebook.common.internal.Preconditions.checkNotNull;
 public final class SimpleCountingIdlingResource implements IdlingResource {
 
     private final String resourceName;
-
     private final AtomicInteger counter = new AtomicInteger(0);
-
     // written from main thread, read from any thread.
     private volatile ResourceCallback resourceCallback;
 

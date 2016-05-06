@@ -42,6 +42,37 @@ public class SimpleTest extends BaseActivityTestCase {
                 .perform(typeText("Lord of rings"), pressKey(KeyEvent.KEYCODE_ENTER));
     }
 
+    @Test
+    public void testing() {
+        onView(withId(R.id.action_search)).perform(click());
+        onView(isAssignableFrom(EditText.class))
+                .perform(typeText("Lord of rings"), pressKey(KeyEvent.KEYCODE_ENTER));
+    }
+
+    @Test
+    public void testingAgain() {
+        onView(withId(R.id.action_search)).perform(click());
+        onView(isAssignableFrom(EditText.class))
+                .perform(typeText("Lord of rings"), pressKey(KeyEvent.KEYCODE_ENTER));
+    }
+
+    @Test
+    public void againAndAgain() {
+        onView(withId(R.id.action_search)).perform(click());
+        onView(isAssignableFrom(EditText.class))
+                .perform(typeText("Lord of rings"), pressKey(KeyEvent.KEYCODE_ENTER));
+    }
+
+    @Test
+    public void omfgWhatHappenedHelpMePlease() {
+        onView(withId(R.id.app_bar_layout)).perform(click());
+        onView(isAssignableFrom(EditText.class))
+                .perform(typeText("Lord of rings"), pressKey(KeyEvent.KEYCODE_ENTER));
+    }
+
+
+
+
     /**
      * Convenience method to register an IdlingResources with Espresso. IdlingResource resource is
      * a great way to tell Espresso when your app is in an idle state. This helps Espresso to

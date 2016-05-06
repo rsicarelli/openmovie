@@ -3,7 +3,6 @@ package br.com.rsicarelli.openmovie.home;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.VisibleForTesting;
 import android.support.test.espresso.IdlingResource;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -81,7 +80,7 @@ public class HomeActivity extends AppCompatActivity implements EspressoIdlingRes
         transaction.commit();
     }
 
-    @VisibleForTesting
+
     @Override
     public IdlingResource getCountingIdlingResource() {
         return EspressoIdlingResource.getIdlingResource();

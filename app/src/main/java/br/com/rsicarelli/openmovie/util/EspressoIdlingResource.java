@@ -27,11 +27,11 @@ public class EspressoIdlingResource {
     private static SimpleCountingIdlingResource simpleCountingIdlingResource =
             new SimpleCountingIdlingResource(RESOURCE);
 
-    public static void increment() {
+    public static void busy() {
         simpleCountingIdlingResource.increment();
     }
 
-    public static void decrement() {
+    public static void idle() {
         simpleCountingIdlingResource.decrement();
     }
 

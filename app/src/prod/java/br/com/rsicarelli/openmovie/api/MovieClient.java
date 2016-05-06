@@ -16,7 +16,7 @@ public class MovieClient implements MovieServiceApi {
 
     @Override
     public void findMoviesByQuery(String query, @NonNull final SearchMoviesCallback callback) {
-        EspressoIdlingResource.increment(); // App is busy until further notice.
+        EspressoIdlingResource.busy(); // App is busy until further notice.
 
         MovieService movieService = RetrofitManager.getRetrofitInstance().create(MovieService.class);
 
@@ -31,7 +31,7 @@ public class MovieClient implements MovieServiceApi {
                     callback.onMovieNotFound("There is no movies with this name :(");
                 }
 
-                EspressoIdlingResource.decrement();
+                EspressoIdlingResource.idle();
             }
 
             @Override
@@ -43,7 +43,7 @@ public class MovieClient implements MovieServiceApi {
 
     @Override
     public void findMovieById(String id, @NonNull final MovieCallback callback) {
-        EspressoIdlingResource.increment(); // App is busy until further notice.
+        EspressoIdlingResource.busy(); // App is busy until further notice.
 
         MovieService movieService = RetrofitManager.getRetrofitInstance().create(MovieService.class);
 
@@ -57,7 +57,7 @@ public class MovieClient implements MovieServiceApi {
                 } else {
                     callback.onMovieNotFound("There is no movie with this id :(");
                 }
-                EspressoIdlingResource.decrement();
+                EspressoIdlingResource.idle();
             }
 
             @Override

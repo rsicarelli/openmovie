@@ -13,16 +13,16 @@ public class ImageDraweeListener extends BaseControllerListener {
 
     @Override
     public void onSubmit(String id, Object callerContext) {
-        EspressoIdlingResource.increment();
+        EspressoIdlingResource.busy();
     }
 
     @Override
     public void onFinalImageSet(String id, Object imageInfo, Animatable animatable) {
-        EspressoIdlingResource.decrement();
+        EspressoIdlingResource.idle();
     }
 
     @Override
     public void onFailure(String id, Throwable throwable) {
-        EspressoIdlingResource.decrement();
+        EspressoIdlingResource.idle();
     }
 }
