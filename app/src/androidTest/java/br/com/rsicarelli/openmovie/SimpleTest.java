@@ -1,6 +1,8 @@
 package br.com.rsicarelli.openmovie;
 
+import android.app.Activity;
 import android.support.test.espresso.Espresso;
+import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.KeyEvent;
@@ -12,6 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import br.com.rsicarelli.openmovie.home.HomeActivity;
+import br.com.rsicarelli.openmovie.movie.MovieActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -35,11 +38,22 @@ public class SimpleTest extends BaseActivityTestCase {
         registerIdlingResource();
     }
 
+    @Override
+    public Class<? extends Activity> getActivityMonitor() {
+        return MovieActivity.class;
+    }
+
     @Test
-    public void shouldDoSomething() {
+    public void shouldTypeInSearchField() {
         onView(withId(R.id.action_search)).perform(click());
         onView(isAssignableFrom(EditText.class))
-                .perform(typeText("L"), pressKey(KeyEvent.KEYCODE_ENTER));
+                .perform(typeText("Lord of Rings"), pressKey(KeyEvent.KEYCODE_ENTER));
+    }
+
+    @Test
+    public void shouldOpenMovieDetails(){
+        onView(withId(R.id.movie_list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        monitor.waitForActivity();
     }
 
     /**

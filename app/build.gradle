@@ -70,6 +70,7 @@ dependencies {
     compile 'com.github.rahatarmanahmed:circularprogressview:2.4.0'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'io.reactivex:rxjava:1.1.0'
+    compile 'com.android.support.test.espresso:espresso-idling-resource:2.2.2'
 
     testCompile "org.mockito:mockito-core:1.10.19"
     testCompile 'junit:junit:4.12'
@@ -83,7 +84,6 @@ dependencies {
     }
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support.test:rules:0.5'
-    compile 'com.android.support.test.espresso:espresso-idling-resource:2.2.2'
 }
 
 /*
