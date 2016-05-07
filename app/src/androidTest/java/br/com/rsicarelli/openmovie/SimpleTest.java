@@ -39,39 +39,8 @@ public class SimpleTest extends BaseActivityTestCase {
     public void shouldDoSomething() {
         onView(withId(R.id.action_search)).perform(click());
         onView(isAssignableFrom(EditText.class))
-                .perform(typeText("Lord of rings"), pressKey(KeyEvent.KEYCODE_ENTER));
+                .perform(typeText("L"), pressKey(KeyEvent.KEYCODE_ENTER));
     }
-
-    @Test
-    public void testing() {
-        onView(withId(R.id.action_search)).perform(click());
-        onView(isAssignableFrom(EditText.class))
-                .perform(typeText("Lord of rings"), pressKey(KeyEvent.KEYCODE_ENTER));
-    }
-
-    @Test
-    public void testingAgain() {
-        onView(withId(R.id.action_search)).perform(click());
-        onView(isAssignableFrom(EditText.class))
-                .perform(typeText("Lord of rings"), pressKey(KeyEvent.KEYCODE_ENTER));
-    }
-
-    @Test
-    public void againAndAgain() {
-        onView(withId(R.id.action_search)).perform(click());
-        onView(isAssignableFrom(EditText.class))
-                .perform(typeText("Lord of rings"), pressKey(KeyEvent.KEYCODE_ENTER));
-    }
-
-    @Test
-    public void omfgWhatHappenedHelpMePlease() {
-        onView(withId(R.id.app_bar_layout)).perform(click());
-        onView(isAssignableFrom(EditText.class))
-                .perform(typeText("Lord of rings"), pressKey(KeyEvent.KEYCODE_ENTER));
-    }
-
-
-
 
     /**
      * Convenience method to register an IdlingResources with Espresso. IdlingResource resource is
